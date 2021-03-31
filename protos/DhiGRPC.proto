@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-service DhiGRPC {
-  rpc Ping (Echo) returns (Echo) {}
-}
-message Echo {
-  string value = 1;
-}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+package grpclib;
+
+service Service {
+  rpc Ping(Empty) returns (Pong) {}
+  rpc Match(MatchRequest) returns (MatchResponse) {}
+}
+
+message Empty{
+
+}
+message Pong {
+  string msg = 1;
+  string timestamp=2;
+}
+
+
+message MatchRequest{
+    string content=1;
+    string tokens=2;
+    enum MatchLevel{
+        simple=0;
+        partial=1;
+        token=2;
+    }
+    MatchLevel level=3;
+}
+
+message MatchResponse{
+    int32 ratio=1;
+}
+
+
+
+// python -m grpc_tools.protoc -I ./protos --python_out=./dhi/grpclib --grpc_python_out=./dhi/grpclib ./protos/Service.proto
