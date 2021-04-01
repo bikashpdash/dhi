@@ -9,13 +9,15 @@ def cli():
     pass
 
 @click.command()
-@click.option('--config', default="config.json", help='Cofig file path')
+@click.option('--config', default="config.ini", help='Config file path')
 def start(config):
-    tprint("DHI")    
-    app.config = app.read_config(config)
-    ips=app.config['ip']
-    print("Listening to:" , [("%s:%s" % (ip,app.config["port"])) for ip in ips])
-    serve(app.config["port"])   
+    tprint("--: DHI :--")    
+    # Reading Configuration
+    app.config.read(config)
+    
+    ips=app.config["SERVICE"]["IP"]
+    print("Listening to:" , [("%s:%s" % (ip,app.config["SERVICE"]["PORT"])) for ip in ips.split(",")])
+    serve(app.config["SERVICE"]["PORT"])   
 
 
 @click.command()
@@ -33,6 +35,8 @@ def match(c,m,t):
 @click.command()
 @click.option('--message', default="DHI", help='Message')
 def echo(message):
+    app.config.read('config.ini')
+    print(app.config["SERVICE"]["IP"])
     print(message)
 
 

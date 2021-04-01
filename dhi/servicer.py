@@ -33,7 +33,7 @@ def serve(port):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     Service_pb2_grpc.add_ServiceServicer_to_server(Servicer(), server)
     
-    if app.config['dev']=='true':
+    if app.config["SERVICE"]['ENV']=='dev':
         # the reflection service will be aware of "Service" and "ServerReflection" services.
         SERVICE_NAMES = (
             Service_pb2.DESCRIPTOR.services_by_name['Service'].full_name,
